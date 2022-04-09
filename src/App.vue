@@ -31,30 +31,30 @@
  <div @click="closeMenu" class="container">
    <div class="main_photo-wrapper">
      <div class="miniatures">
-       <div class="miniature_wrapper">
+       <div @click='changePhoto(1)' class="miniature_wrapper">
          <img  src="./photo/1.png">
          <div class="miniature_fon"></div>
        </div>
-       <div class="miniature_wrapper">
+       <div @click='changePhoto(2)' class="miniature_wrapper">
          <img  src="./photo/suit.png">
          <div class="miniature_fon"></div>
        </div>
-       <div class="miniature_wrapper">
+       <div @click='changePhoto(3)' class="miniature_wrapper">
          <img  src="./photo/suit_1.png">
          <div class="miniature_fon"></div>
        </div>
-       <div class="miniature_wrapper">
+       <div @click='changePhoto(4)' class="miniature_wrapper">
          <img  src="./photo/suit_2.png">
          <div class="miniature_fon"></div>
        </div>
-       <div class="miniature_wrapper">
+       <div @click='changePhoto(5)' class="miniature_wrapper">
          <img  src="./photo/suit_3.png">
          <div class="miniature_fon"></div>
        </div>
 
 
        </div>
-          <img class="main_photo" src="./photo/1.png">
+          <img class="main_photo" :src="currentPhoto">
       </div>
 
 
@@ -250,10 +250,17 @@ export default {
       modalMessage: '',
       showModal: false,
       showMenu: false,
+      currentPhoto: '../../static/1.png'
      
     };
   },
   methods: {
+
+    changePhoto(photo){
+      this.currentPhoto = '../../static/'+photo+'.png'
+      console.log(photo);
+    },
+
     increment() {
       this.number++;
     },
@@ -921,7 +928,7 @@ margin-right: 4px;
 
 .main_photo-wrapper{
   width: 50%;
-  margin-right: 16px;
+
   position: relative;
 }
 @media screen and (max-width: 800px){
