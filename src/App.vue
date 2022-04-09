@@ -1,6 +1,6 @@
 <template>
 <div>
- <header class="header">
+ <header v-show="seeHeader" class="header">
    <div class="header_container">
        <span class="header_logo">logo</span>
      <div>
@@ -243,6 +243,14 @@
 
 <script>
 export default {
+
+  created () {
+    window.addEventListener('scroll', this.handleScroll);
+  },
+  unmounted () {
+    window.removeEventListener('scroll', this.handleScroll);
+  },
+
   data() {
     return {
       titleItem: 'Пижама для девочек',
@@ -250,11 +258,31 @@ export default {
       modalMessage: '',
       showModal: false,
       showMenu: false,
-      currentPhoto: '../../static/1.png'
+      currentPhoto: '../../static/1.png',
+      direction: false,
+      startY: 0,
+      seeHeader: true,
      
     };
   },
   methods: {
+
+    handleScroll () {
+      let scrollY = window.scrollY
+      if (scrollY > this.startY) {
+        this.direction = false;
+      } else {
+        this.direction = true;
+      }
+      this.startY = scrollY;
+      console.log(this.direction)
+
+      if (!this.direction ){
+        this.seeHeader = false
+      } else {
+        this.seeHeader = true
+    }
+    },
 
     changePhoto(photo){
       this.currentPhoto = '../../static/'+photo+'.png'
@@ -461,13 +489,21 @@ p{
   margin-left: 33px;
 }}
 
-.header{
 
+.header{
+ height: 40px;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
   margin-bottom: 24px;
+  position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 2;
+    background: white;
 }
 @media screen and (max-width: 415px){
   .header{
+    height: 66px;
     box-shadow: none;
   }}
 
@@ -482,6 +518,7 @@ p{
   max-width: 1390px;
   margin: 0 auto;
   padding-top: 12px;
+
 }
 
 @media screen and (max-width: 1390px){
@@ -987,9 +1024,7 @@ width: 100%;
   line-height: 16px;
 }
 
-.header{
-  height: 40px;
-}
+
 
 .links{
   display: flex;
@@ -1125,6 +1160,7 @@ width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: center;
+    margin-top: 64px;
   
 }
 @media screen and (max-width: 800px){
